@@ -1,0 +1,221 @@
+/* ===== Переменные (цвета взяты из исходного шаблона) ===== */
+:root {
+  --primary: #6dadbf;
+  --primary-light: #bedde5;
+  --text-muted: #808080;
+  --dark: #333333;
+  --white: #ffffff;
+  --radius: 20px;
+}
+
+/* ===== Сброс ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  color: #111;
+  background: var(--white);
+  /* Подвал всегда прижат к низу экрана, даже если контента мало */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Контейнер: на телефоне поля 16px, на больших экранах ширина ограничена */
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ===== Мобильная версия ===== */
+
+/* ----- Шапка ----- */
+.header {
+  position: relative;
+  z-index: 10;
+  background: var(--white);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+}
+
+/* Чекбокс прячем — он нужен только как «переключатель» */
+.menu-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.burger span {
+  display: block;
+  height: 3px;
+  background: var(--dark);
+  border-radius: 2px;
+}
+
+/* Мобильное меню — выезжающая панель справа */
+.nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(280px, 80vw);
+  height: 100vh;
+  padding: 60px 24px;
+  background: rgba(0, 0, 0, 0.95);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 20;
+}
+
+.nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.nav__link {
+  display: block;
+  padding: 12px;
+  color: var(--white);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav__link:hover {
+  color: var(--primary);
+}
+
+.nav__close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--white);
+  cursor: pointer;
+}
+
+/* Затемнение фона под открытым меню */
+.nav__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 15;
+}
+
+/* Чекбокс отмечен → меню открыто */
+.menu-toggle:checked ~ .nav {
+  transform: translateX(0);
+}
+
+.menu-toggle:checked ~ .nav__overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ----- Основная секция ----- */
+.section {
+  background: var(--primary);
+  flex: 1;
+  padding: 40px 0;
+  overflow: hidden; /* «клякса» шире экрана — без этого появится горизонтальный скролл */
+}
+
+.section__inner {
+  position: relative;
+}
+
+/* Декоративная фигура: в потоке не участвует, лежит под карточками */
+.blob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 160%;
+  height: 60%;
+  transform: translate(-50%, -50%);
+  fill: var(--primary-light);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Сетка карточек: на телефоне одна колонка */
+.grid {
+  position: relative; /* чтобы карточки были поверх .blob */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  background: var(--white);
+  border: 3px solid var(--primary);
+  /* Скругление только по диагонали: верх-лево и низ-право */
+  border-radius: var(--radius) 0 var(--radius) 0;
+}
+
+.card__num {
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 2.25rem;
+  line-height: 1.1;
+  color: var(--primary);
+}
+
+.card__text {
+  margin: 12px 0 0;
+  font-size: 0.9375rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* ----- Подвал ----- */
+.footer {
+  padding: 24px 0;
+  background: var(--dark);
+  color: var(--white);
+  text-align: center;
+}
+
+.footer__text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
